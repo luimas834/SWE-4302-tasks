@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Registation Form Validation </title>
+        <style>
+                    body{font-family: sans-serif; padding: 20px;}
+                    .form-container{max-width: 400px;margin:0 auto;}
+                    .input-group{margin-bottom: 15px;}
+                    label{display: block; margin-bottom: 5px; font-weight: bold}
+                    input,select{width: 100%;padding: 8px; box-sizing:box;}
+                    #error-msg{color: red; font-weight: bold;}
+        </style>
+    </head>
+    <body>
+        <div class="form-container">
+            <h2>Registation Form</h2>
+
+            <form name="regForm" onsubmit="return validateForm()" method="post">
+                <div class="input-group">
+                    <label>Name:</label>
+                    <input type="text" name="fullname" id="fullname">
+                </div>
+
+                <div class="input-group">
+                    <label>Email:</label>
+                    <input type="text" name="email" id="email">
+                </div>
+
+                <div class="input-group">
+                    <label>Password:</label>
+                    <input type="password" name="password" id="password" placeholder="At least 8 characters">
+                </div>
+
+                <div class="input-group">
+                    <label>Confirm Password:</label>
+                    <input type="password" name="confirmpass" id="confirmpass">
+                </div>
+
+                <div class="input-group">
+                    <label>Phone Number (10 digits):</label>
+                    <input type="text" name="phone" id="phone">
+                </div>
+
+                <div class="input-group">
+                    <input type="checkbox" name="terms" id="terms" style="width: auto;">
+                    <label style="display:inline;">I agree to the terms</label>
+                </div>
+
+                <p id="error-msg"></p> <button type="submit">Register</button>
+            </form>
+        </div>
+        <script>
+            function validateForm(){
+                var name=document.getElementById("fullname").value;
+                var email = document.getElementById("email").value;
+                var pass = document.getElementById("password").value;
+                var confirmPass = document.getElementById("confirmpass").value;
+                var phone = document.getElementById("phone").value;
+                var terms = document.getElementById("terms").checked;
+                var errorElement = document.getElementById("error-msg");
+                errorElement.innerHTML="";
+
+                if(name===""){
+                    errorElement.innerHTML ="Name is required.";
+                    return false;
+                }
+                var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(email)) {
+                    errorElement.innerHTML = "Please enter a valid email address.";
+                    return false; 
+                }
+                if (pass.length < 8) {
+                    errorElement.innerHTML = "Password must be at least 8 characters long.";
+                    return false;
+                }
+                if(pass !== confirmPass){
+                    errorElement.innerHTML ="passwords do not match.";
+                    return false;
+                }
+                if (isNaN(phone) || phone.length !== 10) {
+                    errorElement.innerHTML = "Phone must be a valid 10-digit number.";
+                    return false;
+                }
+                if (!terms) {
+                    errorElement.innerHTML = "You must agree to the terms.";
+                    return false;
+                }
+                alert("FROM SUBMITTED SUCCESSFULLY!");
+                return true;
+            }
+        </script>
+    </body>
+</html>
